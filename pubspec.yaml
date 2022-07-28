@@ -28,3 +28,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/popular_locations/
+    - assets/guests_love/
