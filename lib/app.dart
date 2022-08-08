@@ -1,5 +1,7 @@
 import 'package:devcademy_flutter/router.dart';
+import 'package:devcademy_flutter/screens/apartments-screen/apartments_list_screen.dart';
 import 'package:devcademy_flutter/screens/home-screen/home_screen.dart';
+import 'package:devcademy_flutter/screens/location-screen/pop_locations_screen.dart';
 import 'package:devcademy_flutter/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +13,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.homeScreen,
+      initialRoute: Routes.appList,
       routes: {
         Routes.homeScreen: (context) => const HomeScreen(),
+        Routes.appList: (context) => const ApartmentsListScreen(),
+        Routes.popLocationList: (context) => const PopLocationScreen(),
       },
     );
   }

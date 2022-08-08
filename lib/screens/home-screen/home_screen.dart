@@ -1,10 +1,16 @@
+import 'package:devcademy_flutter/shared/models/accomodation.dart';
+import 'package:devcademy_flutter/shared/utils/basic_utils.dart';
+import 'package:devcademy_flutter/shared/widgets/custom_leading.dart';
+import 'package:devcademy_flutter/shared/widgets/home_guests_love.dart';
+import 'package:devcademy_flutter/shared/widgets/my_actions.dart';
+import 'package:devcademy_flutter/shared/widgets/popular_location.dart';
+import 'package:devcademy_flutter/theme.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/app_bar.dart';
-import '../../shared/feature_header.dart';
-import './widgets/popular_location.dart';
-import './widgets/home_guests_love.dart';
-import '../../../assets.dart';
+import '../../shared/widgets//app_bar.dart';
+import '../../shared/widgets//feature_header.dart';
+import '../../http.dart';
+import '../../shared/models/location.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,73 +20,97 @@ class HomeScreen extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: MyAppBar(
+          name: "Staycation",
+          actions: [
+            CustomAction(
+              tooltip: "Search",
+              icon: Icon(
+                Icons.search,
+                color: ThemeColors.teal800,
+              ),
+            ),
+            CustomAction(
+              tooltip: "More",
+              icon: Icon(
+                Icons.more_vert,
+                color: ThemeColors.teal800,
+              ),
+            )
+          ],
           key: UniqueKey(),
         ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const FeatureHeader(
                   title: 'Popular locations',
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Row(
-                    children: [
-                      PopularLocation(
-                        name: 'London',
-                        key: UniqueKey(),
-                      ),
-                      PopularLocation(name: 'Tokyo', key: UniqueKey()),
-                    ],
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Row(
-                    children: [
-                      PopularLocation(
-                        name: 'Barcelona',
-                        key: UniqueKey(),
-                      ),
-                      PopularLocation(
-                        name: 'New York',
-                        key: UniqueKey(),
-                      )
-                    ],
-                  ),
-                ),
+                FutureBuilder(
+                    future: http.getPopularLocations(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      BasicUtils.futureCheck(snapshot);
+
+                      List<Location> locations = snapshot.data;
+
+                      List<Widget> pop = locations
+                          .map((e) => PopularLocation(
+                                location: e,
+                                key: UniqueKey(),
+                              ))
+                          .toList();
+
+                      return Container(
+                        margin: const EdgeInsets.only(left: 20),
+                        child: Wrap(
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              children: [pop[0], pop[1]],
+                            ),
+                            Row(
+                              children: [pop[2], pop[3]],
+                            )
+                          ],
+                        ),
+                      );
+                    }),
                 const FeatureHeader(
                   title: 'Home guests love',
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GuestsLove(
-                        name: 'Sugar & Spice Apartments',
-                        location: 'Split',
-                        price: 75,
-                        rating: 5,
-                        image: Assets.images.ap1,
-                        key: UniqueKey(),
+                FutureBuilder(
+                  future: http.getPopularHomes(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    BasicUtils.futureCheck(snapshot);
+
+                    List<Accomodation> accomodation = snapshot.data;
+
+                    List<Widget> homes = accomodation
+                        .map((e) => GuestsLove(
+                              accomodation: e,
+                              key: UniqueKey(),
+                            ))
+                        .toList();
+
+                    return Container(
+                      margin: const EdgeInsets.only(left: 20),
+                      height: 316,
+                      width: double.infinity,
+                      child: Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: homes.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              homes[index],
+                        ),
                       ),
-                      GuestsLove(
-                        name: 'Lemon Luxury Apartments',
-                        location: 'Saint Tropez',
-                        price: 174,
-                        rating: 5,
-                        image: Assets.images.ap2,
-                        key: UniqueKey(),
-                      )
-                    ],
-                  ),
-                )
+                    );
+                  },
+                ),
               ],
             ),
           ),
