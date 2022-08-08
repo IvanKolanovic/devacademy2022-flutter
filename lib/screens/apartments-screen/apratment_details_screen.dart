@@ -58,11 +58,14 @@ class _ApartmentDetalsState extends State<ApartmentDetals> {
                   fit: BoxFit.cover,
                 ),
               ),
-               Positioned(
+              Positioned(
                 top: 10,
                 left: 10,
                 child: CustomLeading(
-                    icon:const Icon(Icons.arrow_back), tooltip: "Go back",color: ThemeColors.teal800,),
+                  icon: const Icon(Icons.arrow_back),
+                  tooltip: "Go back",
+                  color: ThemeColors.teal800,
+                ),
               ),
               SizedBox.expand(
                 child: DraggableScrollableSheet(
@@ -86,7 +89,22 @@ class _ApartmentDetalsState extends State<ApartmentDetals> {
                   },
                 ),
               ),
-              
+              Align(
+                alignment: AlignmentDirectional.bottomCenter,
+                child: Container(
+                  width: 330,
+                  padding: const EdgeInsets.only(top: 20, bottom: 0, right: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: ThemeColors.mint400,
+                      onPrimary: Colors.white,
+                      textStyle: textTheme.button,
+                    ),
+                    onPressed: () {},
+                    child: const Text('BOOK YOUR STAY'),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

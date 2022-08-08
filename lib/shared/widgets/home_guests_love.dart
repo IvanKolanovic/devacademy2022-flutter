@@ -53,17 +53,17 @@ class _GuestsLoveState extends State<GuestsLove> {
             width: 8,
             height: 8,
           ),
-          Text(widget.accomodation.location,
-              style: textTheme.bodyText2!
-                  .merge(TextStyle(color: ThemeColors.gray300)),
+          Text(widget.accomodation.title,
+              style: textTheme.bodyText1!
+                  .merge(const TextStyle(color: Colors.black)),
               textAlign: TextAlign.left),
           const SizedBox(
             width: 8,
             height: 8,
           ),
-          Text(widget.accomodation.title,
-              style: textTheme.bodyText1!
-                  .merge(const TextStyle(color: Colors.black)),
+          Text(widget.accomodation.location,
+              style: textTheme.bodyText2!
+                  .merge(TextStyle(color: ThemeColors.gray300)),
               textAlign: TextAlign.left),
           const SizedBox(
             width: 8,

@@ -12,6 +12,15 @@ class DetailsSheat extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 20, top: 36),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Center(
+          child: SizedBox(
+            width: 28,
+            child: Divider(
+              thickness: 3,
+              color: ThemeColors.gray200,
+            ),
+          ),
+        ),
         Text(accomodation.title,
             style: textTheme.headline6!
                 .merge(const TextStyle(color: Colors.black)),
@@ -167,20 +176,9 @@ class DetailsSheat extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ),
-        Center(
-          child: Container(
-            width: 330,
-            padding: const EdgeInsets.only(top: 20, bottom: 28,right: 10),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: ThemeColors.mint400,
-                onPrimary: Colors.white,
-                textStyle: textTheme.button,
-              ),
-              onPressed: () {},
-              child: const Text('BOOK YOUR STAY'),
-            ),
-          ),
+         const SizedBox(
+          width: 10,
+          height: 60,
         ),
       ]),
     );

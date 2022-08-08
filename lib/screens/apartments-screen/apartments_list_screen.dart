@@ -38,35 +38,30 @@ class ApartmentsListScreen extends StatelessWidget {
           ],
           key: UniqueKey(),
         ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            child: FutureBuilder(
-              future: http.getAllAccomodations(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                BasicUtils.futureCheck(snapshot);
+        body: FutureBuilder(
+          future: http.getAllAccomodations(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            BasicUtils.futureCheck(snapshot);
 
-                double top =
-                    MediaQuery.of(context).padding.top + kToolbarHeight - 80;
+            double top =
+                MediaQuery.of(context).padding.top + kToolbarHeight - 80;
 
-                List<Accomodation> acc = snapshot.data;
-                List<Widget> homes = acc
-                    .map((e) => Container(
-                          margin: EdgeInsets.only(left: 20, top: top.abs()),
-                          child: GuestsLoveAlt(
-                            accomodation: e,
-                            key: UniqueKey(),
-                          ),
-                        ))
-                    .toList();
+            List<Accomodation> acc = snapshot.data;
+            List<Widget> homes = acc
+                .map((e) => Container(
+                      margin: EdgeInsets.only(left: 20, top: top.abs()),
+                      child: GuestsLoveAlt(
+                        accomodation: e,
+                        key: UniqueKey(),
+                      ),
+                    ))
+                .toList();
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: homes,
-                );
-              },
-            ),
-          ),
+            return ListView(
+              scrollDirection: Axis.vertical,
+              children: homes,
+            );
+          },
         ),
       ),
     );
