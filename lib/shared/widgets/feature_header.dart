@@ -3,7 +3,8 @@ import 'package:devcademy_flutter/theme.dart';
 
 class FeatureHeader extends StatelessWidget {
   final String title;
-  const FeatureHeader({this.title = 'Default Title', Key? key})
+  final void Function()? onPressed;
+  const FeatureHeader({this.onPressed, this.title = 'Default Title', Key? key})
       : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class FeatureHeader extends StatelessWidget {
                 .merge(const TextStyle(color: Colors.black)),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: onPressed,
             child: Text('VIEW MORE',
                 style: textTheme.button!.merge(TextStyle(
                   color: ThemeColors.mint400,

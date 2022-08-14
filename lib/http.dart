@@ -1,3 +1,4 @@
+import 'package:devcademy_flutter/shared/models/reservations.dart';
 import 'package:dio/dio.dart';
 
 import './shared/models/location.dart';
@@ -58,6 +59,40 @@ class HTTP {
     );
     return response.data
         .map<Accomodation>((json) => Accomodation.fromJson(json))
+        .toList();
+  }
+
+  Future<List<Accomodation>> getMyPlaces() async {
+    Response response = await client.get(
+      'myplaces',
+    );
+    return response.data
+        .map<Accomodation>((json) => Accomodation.fromJson(json))
+        .toList();
+  }
+
+  Future<List<Reservation>> getMyBookings() async {
+    Response response = await client.get(
+      'homes-all/1/reservation',
+    );
+    return response.data
+        .map<Reservation>((json) => Reservation.fromJson(json))
+        .toList();
+  }
+
+  Future<Accomodation> getAccomodation(String id) async {
+    Response response = await client.get(
+      'homes-all/$id',
+    );
+    return Accomodation.fromJson(response.data);
+  }
+
+  Future<List<Reservation>> getReservation(String id) async {
+    Response response = await client.get(
+      'homes-all/$id/reservation',
+    );
+    return response.data
+        .map<Reservation>((json) => Reservation.fromJson(json))
         .toList();
   }
 }

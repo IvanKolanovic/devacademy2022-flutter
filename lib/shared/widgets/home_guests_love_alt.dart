@@ -9,20 +9,11 @@ class GuestsLoveAlt extends StatelessWidget {
 
   const GuestsLoveAlt({required this.accomodation, Key? key}) : super(key: key);
 
-  void _navigateToNextScreen(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => ApartmentDetals(
-        accomodation: accomodation,
-        key: UniqueKey(),
-      ),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        _navigateToNextScreen(context);
+        BasicUtils.navigateToNextScreen(context, accomodation);
       },
       child: Row(
         children: [

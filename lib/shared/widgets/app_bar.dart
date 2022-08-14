@@ -28,7 +28,7 @@ class MyAppBarState extends State<MyAppBar> {
             blurRadius: 4)
       ]),
       child: AppBar(
-        leading: widget.leading,
+        leading: widget.leading ,
         title: Text(
           widget.name,
           style:

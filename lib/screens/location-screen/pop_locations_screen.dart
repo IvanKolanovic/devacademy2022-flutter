@@ -5,8 +5,7 @@ import 'package:devcademy_flutter/shared/widgets/app_bar.dart';
 import 'package:devcademy_flutter/shared/widgets/custom_leading.dart';
 import 'package:devcademy_flutter/shared/widgets/popular_location.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 
 class PopLocationScreen extends StatelessWidget {
   const PopLocationScreen({Key? key}) : super(key: key);
