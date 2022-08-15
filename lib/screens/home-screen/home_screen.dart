@@ -1,6 +1,7 @@
+import 'package:devcademy_flutter/router.dart';
 import 'package:devcademy_flutter/shared/models/accomodation.dart';
 import 'package:devcademy_flutter/shared/utils/basic_utils.dart';
-import 'package:devcademy_flutter/shared/widgets/custom_leading.dart';
+import 'package:devcademy_flutter/shared/widgets/bottom_nav_bar.dart';
 import 'package:devcademy_flutter/shared/widgets/home_guests_love.dart';
 import 'package:devcademy_flutter/shared/widgets/my_actions.dart';
 import 'package:devcademy_flutter/shared/widgets/popular_location.dart';
@@ -46,8 +47,10 @@ class HomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const FeatureHeader(
+                FeatureHeader(
                   title: 'Popular locations',
+                  onPressed: () =>
+                      router.navigateTo(context, Routes.popLocationList),
                 ),
                 FutureBuilder(
                     future: http.getPopularLocations(),
@@ -79,8 +82,9 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     }),
-                const FeatureHeader(
+                FeatureHeader(
                   title: 'Home guests love',
+                  onPressed: (() => router.navigateTo(context, Routes.appList)),
                 ),
                 FutureBuilder(
                   future: http.getPopularHomes(),
@@ -115,6 +119,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
+        bottomNavigationBar: MyBottomNavBar(currentIndex: 0, key: UniqueKey()),
         // bottomNavigationBar: MyBottomNavBar(key: UniqueKey()),
       ),
     );

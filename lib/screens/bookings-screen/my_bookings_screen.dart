@@ -1,15 +1,16 @@
 import 'package:devcademy_flutter/http.dart';
-import 'package:devcademy_flutter/shared/models/accomodation.dart';
+import 'package:devcademy_flutter/shared/models/reservations.dart';
 import 'package:devcademy_flutter/shared/utils/basic_utils.dart';
 import 'package:devcademy_flutter/shared/widgets/app_bar.dart';
+import 'package:devcademy_flutter/shared/widgets/bookings.dart';
+import 'package:devcademy_flutter/shared/widgets/bottom_nav_bar.dart';
 import 'package:devcademy_flutter/shared/widgets/custom_leading.dart';
-import 'package:devcademy_flutter/shared/widgets/home_guests_love_alt.dart';
 import 'package:devcademy_flutter/shared/widgets/my_actions.dart';
 import 'package:devcademy_flutter/theme.dart';
 import 'package:flutter/material.dart';
 
-class ApartmentsListScreen extends StatelessWidget {
-  const ApartmentsListScreen({Key? key}) : super(key: key);
+class MyBookingsScreen extends StatelessWidget {
+  const MyBookingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +19,8 @@ class ApartmentsListScreen extends StatelessWidget {
         appBar: MyAppBar(
           leading: const CustomLeading(
               icon: Icon(Icons.arrow_back), tooltip: "Go back"),
-          name: "Homes guests love",
+          name: "My Bookings",
           actions: [
-            CustomAction(
-              tooltip: "Search",
-              icon: Icon(
-                Icons.search,
-                color: ThemeColors.teal800,
-              ),
-            ),
             CustomAction(
               tooltip: "More",
               icon: Icon(
@@ -38,19 +32,19 @@ class ApartmentsListScreen extends StatelessWidget {
           key: UniqueKey(),
         ),
         body: FutureBuilder(
-          future: http.getAllAccomodations(),
+          future: http.getMyBookings(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             BasicUtils.futureCheck(snapshot);
 
             double top =
                 MediaQuery.of(context).padding.top + kToolbarHeight - 80;
 
-            List<Accomodation> acc = snapshot.data;
+            List<Reservation> acc = snapshot.data;
             List<Widget> homes = acc
                 .map((e) => Container(
                       margin: EdgeInsets.only(left: 20, top: top.abs()),
-                      child: GuestsLoveAlt(
-                        accomodation: e,
+                      child: Bookings(
+                        reservation: e,
                         key: UniqueKey(),
                       ),
                     ))
@@ -62,6 +56,7 @@ class ApartmentsListScreen extends StatelessWidget {
             );
           },
         ),
+        bottomNavigationBar: MyBottomNavBar(currentIndex: 1,key: UniqueKey()),
       ),
     );
   }

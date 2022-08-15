@@ -1,3 +1,4 @@
+import 'package:devcademy_flutter/router.dart';
 import 'package:devcademy_flutter/shared/models/accomodation.dart';
 import 'package:devcademy_flutter/shared/utils/basic_utils.dart';
 import 'package:flutter/material.dart';
@@ -32,57 +33,62 @@ class _GuestsLoveState extends State<GuestsLove> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 6.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image.network(
-                widget.accomodation.imageUrl,
-                width: 158,
-                height: 158,
-                fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        BasicUtils.navigateToNextScreen(context, widget.accomodation);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 6.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Image.network(
+                  widget.accomodation.imageUrl,
+                  width: 158,
+                  height: 158,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 8,
-            height: 8,
-          ),
-          Text(widget.accomodation.title,
-              style: textTheme.bodyText1!
-                  .merge(const TextStyle(color: Colors.black)),
-              textAlign: TextAlign.left),
-          const SizedBox(
-            width: 8,
-            height: 8,
-          ),
-          Text(widget.accomodation.location,
-              style: textTheme.bodyText2!
-                  .merge(TextStyle(color: ThemeColors.gray300)),
-              textAlign: TextAlign.left),
-          const SizedBox(
-            width: 8,
-            height: 8,
-          ),
-          Text('EUR ${widget.accomodation.price}',
-              style: textTheme.bodyText1!
-                  .merge(const TextStyle(color: Colors.black)),
-              textAlign: TextAlign.left),
-          const SizedBox(
-            width: 8,
-            height: 8,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children:
-                BasicUtils.createRating(widget.accomodation.categorization),
-          )
-        ],
+            const SizedBox(
+              width: 8,
+              height: 8,
+            ),
+            Text(widget.accomodation.title,
+                style: textTheme.bodyText1!
+                    .merge(const TextStyle(color: Colors.black)),
+                textAlign: TextAlign.left),
+            const SizedBox(
+              width: 8,
+              height: 8,
+            ),
+            Text(widget.accomodation.location,
+                style: textTheme.bodyText2!
+                    .merge(TextStyle(color: ThemeColors.gray300)),
+                textAlign: TextAlign.left),
+            const SizedBox(
+              width: 8,
+              height: 8,
+            ),
+            Text('EUR ${widget.accomodation.price}',
+                style: textTheme.bodyText1!
+                    .merge(const TextStyle(color: Colors.black)),
+                textAlign: TextAlign.left),
+            const SizedBox(
+              width: 8,
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:
+                  BasicUtils.createRating(widget.accomodation.categorization),
+            )
+          ],
+        ),
       ),
     );
   }

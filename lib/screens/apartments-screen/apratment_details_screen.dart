@@ -1,13 +1,9 @@
 import 'package:devcademy_flutter/shared/models/accomodation.dart';
 import 'package:devcademy_flutter/shared/widgets/apartment_details_sheat.dart';
 import 'package:devcademy_flutter/shared/widgets/custom_leading.dart';
-import 'package:devcademy_flutter/shared/widgets/my_actions.dart';
 import 'package:devcademy_flutter/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import '../../shared/widgets/app_bar.dart';
 
 class ApartmentDetals extends StatefulWidget {
   final Accomodation accomodation;

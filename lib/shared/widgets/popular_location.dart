@@ -1,3 +1,4 @@
+import 'package:devcademy_flutter/router.dart';
 import 'package:devcademy_flutter/theme.dart';
 import 'package:flutter/material.dart';
 import '../../../shared/models/location.dart';
@@ -15,60 +16,63 @@ class PopularLocation extends StatefulWidget {
 class _PopularLocationState extends State<PopularLocation> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(10),
-          child: ClipRRect(
+    return InkWell(
+      onTap: () => router.navigateTo(context, Routes.appList),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                widget.location.imageUrl,
+                width: 158,
+                height: 155,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              widget.location.imageUrl,
+            child: Container(
               width: 158,
               height: 155,
-              fit: BoxFit.cover,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromRGBO(0, 0, 0, 0.38),
+                      Color.fromRGBO(255, 255, 255, 0)
+                    ]),
+              ),
             ),
           ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: Container(
-            width: 158,
-            height: 155,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(0, 0, 0, 0.38),
-                    Color.fromRGBO(255, 255, 255, 0)
-                  ]),
+          Positioned(
+            top: 20,
+            left: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.location.locationName,
+                  style: textTheme.bodyText1!.merge(const TextStyle(
+                    color: Colors.white,
+                  )),
+                ),
+                Text(
+                  '${widget.location.properties}  properties',
+                  style: textTheme.bodyText2!.merge(const TextStyle(
+                    color: Colors.white,
+                  )),
+                ),
+              ],
             ),
           ),
-        ),
-        Positioned(
-          top: 20,
-          left: 20,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.location.locationName,
-                style: textTheme.bodyText1!.merge(const TextStyle(
-                  color: Colors.white,
-                )),
-              ),
-              Text(
-                '${widget.location.properties}  properties',
-                style: textTheme.bodyText2!.merge(const TextStyle(
-                  color: Colors.white,
-                )),
-              ),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
