@@ -25,6 +25,7 @@ class HomeScreen extends StatelessWidget {
           actions: [
             CustomAction(
               tooltip: "Search",
+              onPress: () => router.navigateTo(context, Routes.search),
               actionWidget: Icon(
                 Icons.search,
                 color: ThemeColors.teal800,

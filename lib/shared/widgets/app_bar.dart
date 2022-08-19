@@ -4,9 +4,15 @@ import 'package:devcademy_flutter/theme.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String name;
+  final bool? hideShadow;
   final List<CustomAction>? actions;
   final Widget? leading;
-  const MyAppBar({this.leading, this.name = "", this.actions, Key? key})
+  const MyAppBar(
+      {this.hideShadow = false,
+      this.leading,
+      this.name = "",
+      this.actions,
+      Key? key})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -21,14 +27,16 @@ class MyAppBarState extends State<MyAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(boxShadow: [
-        BoxShadow(
-            color: Color.fromRGBO(205, 205, 205, 0.25),
-            offset: Offset(0, 4),
-            blurRadius: 4)
-      ]),
+      decoration: widget.hideShadow!
+          ? null
+          : const BoxDecoration(boxShadow: [
+              BoxShadow(
+                  color: Color.fromRGBO(205, 205, 205, 0.25),
+                  offset: Offset(0, 4),
+                  blurRadius: 4)
+            ]),
       child: AppBar(
-        leading: widget.leading ,
+        leading: widget.leading,
         title: Text(
           widget.name,
           style:

@@ -2,6 +2,7 @@ import 'package:devcademy_flutter/router.dart';
 import 'package:devcademy_flutter/screens/apartments-screen/apartments_list_screen.dart';
 import 'package:devcademy_flutter/screens/bookings-screen/my_bookings_screen.dart';
 import 'package:devcademy_flutter/screens/forms-screens/add_place_screen.dart';
+import 'package:devcademy_flutter/screens/forms-screens/search.dart';
 import 'package:devcademy_flutter/screens/home-screen/home_screen.dart';
 import 'package:devcademy_flutter/screens/location-screen/pop_locations_screen.dart';
 import 'package:devcademy_flutter/screens/places-screen/my_places_screen.dart';
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
         Routes.myBookings: (context) => const MyBookingsScreen(),
         Routes.myPlaces: (context) => const MyPlacesScreen(),
         Routes.addEditPlaces: (context) => const AddEditPlacesScreen(),
+        Routes.search: (context) => const SearchScreen(),
       },
     );
   }
