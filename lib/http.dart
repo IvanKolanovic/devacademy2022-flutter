@@ -95,6 +95,22 @@ class HTTP {
         .map<Reservation>((json) => Reservation.fromJson(json))
         .toList();
   }
+
+  Future<void> deleteMyPlaces(String id) async {
+    Response response = await client.delete(
+      'myplaces/$id',
+    );
+  }
+
+  Future<Accomodation> addMyPlace(Accomodation accomodation) async {
+    Response response = await client.post('myplaces', data: accomodation);
+    return Accomodation.fromJson(response.data);
+  }
+
+  Future<Accomodation> editMyPlace(Accomodation accomodation) async {
+    Response response = await client.put('myplaces', data: accomodation);
+    return Accomodation.fromJson(response.data);
+  }
 }
 
 final http = HTTP();

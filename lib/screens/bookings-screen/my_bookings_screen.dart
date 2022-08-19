@@ -23,7 +23,7 @@ class MyBookingsScreen extends StatelessWidget {
           actions: [
             CustomAction(
               tooltip: "More",
-              icon: Icon(
+              actionWidget: Icon(
                 Icons.more_vert,
                 color: ThemeColors.teal800,
               ),

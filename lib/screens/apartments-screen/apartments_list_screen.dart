@@ -22,14 +22,14 @@ class ApartmentsListScreen extends StatelessWidget {
           actions: [
             CustomAction(
               tooltip: "Search",
-              icon: Icon(
+              actionWidget: Icon(
                 Icons.search,
                 color: ThemeColors.teal800,
               ),
             ),
             CustomAction(
               tooltip: "More",
-              icon: Icon(
+              actionWidget: Icon(
                 Icons.more_vert,
                 color: ThemeColors.teal800,
               ),

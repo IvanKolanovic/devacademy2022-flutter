@@ -8,6 +8,7 @@ class Routes {
   static String appDetails = 'appDetails';
   static String myBookings = 'myBookings';
   static String myPlaces = 'myPlaces';
+  static String addEditPlaces = 'addPlaces';
 }
 
 class Router {

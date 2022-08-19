@@ -5,18 +5,21 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class CustomAction extends StatelessWidget {
   final void Function()? onPress;
-  final Icon icon;
+  final Widget actionWidget;
   final String tooltip;
   const CustomAction(
-      {required this.tooltip, this.onPress, required this.icon, Key? key})
+      {required this.tooltip, this.onPress, required this.actionWidget, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPress,
-      icon: icon,
-      tooltip: tooltip,
+    return SizedBox(
+      width: 50,
+      child: IconButton(
+        onPressed: onPress,
+        icon: actionWidget,
+        tooltip: tooltip,
+      ),
     );
   }
 }

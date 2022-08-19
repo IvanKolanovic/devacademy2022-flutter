@@ -66,6 +66,11 @@ final TextTheme textTheme = TextTheme(
     fontWeight: FontWeight.w500,
     letterSpacing: 0.4,
   ),
+  overline: GoogleFonts.roboto(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.15,
+  ),
 );
 
 ThemeData theme = ThemeData(
