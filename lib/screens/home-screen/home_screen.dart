@@ -1,127 +1,108 @@
-import 'package:devcademy_flutter/router.dart';
-import 'package:devcademy_flutter/shared/models/accomodation.dart';
-import 'package:devcademy_flutter/shared/utils/basic_utils.dart';
-import 'package:devcademy_flutter/shared/widgets/bottom_nav_bar.dart';
-import 'package:devcademy_flutter/shared/widgets/home_guests_love.dart';
-import 'package:devcademy_flutter/shared/widgets/my_actions.dart';
-import 'package:devcademy_flutter/shared/widgets/popular_location.dart';
-import 'package:devcademy_flutter/theme.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/widgets//app_bar.dart';
-import '../../shared/widgets//feature_header.dart';
-import '../../http.dart';
-import '../../shared/models/location.dart';
+import 'package:devcademy_flutter/theme.dart';
+
+import '../../shared-widgets/searchbar.dart';
+import '../../shared-widgets/city_card.dart';
+import 'package:devcademy_flutter/shared-widgets/accommodation_card.dart';
+import 'package:devcademy_flutter/screens/home-screen/category_title.dart';
+
+import 'package:devcademy_flutter/models/location.dart';
+import 'package:devcademy_flutter/models/accommodation.dart';
+
+import 'package:devcademy_flutter/http.dart';
+
+import 'package:devcademy_flutter/router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        appBar: MyAppBar(
-          name: "Staycation",
-          actions: [
-            CustomAction(
-              tooltip: "Search",
-              onPress: () => router.navigateTo(context, Routes.search),
-              actionWidget: Icon(
-                Icons.search,
-                color: ThemeColors.teal800,
-              ),
-            ),
-            CustomAction(
-              tooltip: "More",
-              actionWidget: Icon(
-                Icons.more_vert,
-                color: ThemeColors.teal800,
-              ),
-            )
-          ],
-          key: UniqueKey(),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                FeatureHeader(
-                  title: 'Popular locations',
-                  onPressed: () =>
-                      router.navigateTo(context, Routes.popLocationList),
-                ),
-                FutureBuilder(
-                    future: http.getPopularLocations(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      BasicUtils.futureCheck(snapshot);
+    return Scaffold(
+      appBar: const SearchBar(title: 'Staycation', hideLeading: true, showSearch: true, showOptions: true,),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CategoryTitle(category: 'Popular locations', onPressed: () => router.navigateTo(context, Routes.locationListScreen),),
+            FutureBuilder(
+              future: http.getPopularLocations(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+              
+                if(snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                    color: ThemeColors.mint500,
+                  ),);
+                }
 
-                      List<Location> locations = snapshot.data;
+                if(snapshot.hasData) {
+                  List<Location> locations = snapshot.data;
 
-                      List<Widget> pop = locations
-                          .map((e) => PopularLocation(
-                                location: e,
-                                key: UniqueKey(),
-                              ))
-                          .toList();
-
-                      return Container(
-                        margin: const EdgeInsets.only(left: 20),
-                        child: Wrap(
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.spaceEvenly,
-                          children: [
-                            Row(
-                              children: [pop[0], pop[1]],
-                            ),
-                            Row(
-                              children: [pop[2], pop[3]],
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-                FeatureHeader(
-                  title: 'Home guests love',
-                  onPressed: (() => router.navigateTo(context, Routes.appList)),
-                ),
-                FutureBuilder(
-                  future: http.getPopularHomes(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    BasicUtils.futureCheck(snapshot);
-
-                    List<Accomodation> accomodation = snapshot.data;
-
-                    List<Widget> homes = accomodation
-                        .map((e) => GuestsLove(
-                              accomodation: e,
-                              key: UniqueKey(),
-                            ))
-                        .toList();
-
-                    return Container(
-                      margin: const EdgeInsets.only(left: 20),
-                      height: 316,
-                      width: double.infinity,
-                      child: Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: homes.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              homes[index],
-                        ),
-                      ),
+                  return GridView.count(
+                      primary: false,
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      children: List.generate(locations.length, (index) {
+                        return (CityCards(
+                          locationCard: locations[index],
+                        ));
+                      }),
                     );
-                  },
-                ),
-              ],
+                } else if(snapshot.hasError) {
+                  return const Center(child: Text('Snapshot has errors!'));
+                }
+
+                return const Center(child: Text('Error!'));
+              },
             ),
-          ),
+            CategoryTitle(category: 'Homes guests love', onPressed: () => router.navigateTo(context, Routes.apartmentsListScreen),),
+            SizedBox(
+              height: MediaQuery.of(context).size.height*0.420,
+              child: FutureBuilder(
+                future: http.getPopularHomes(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                
+                  if(snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                      color: ThemeColors.mint500,
+                    ),);
+                  }
+
+                  if(snapshot.hasData) {
+                    List<Accommodation> accommodations = snapshot.data;
+
+                    return //Expanded(
+                      //child: 
+                      ListView(
+                        primary: false,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        children: List.generate(
+                          accommodations.length,
+                          (index) {
+                            return AcommodationCards(
+                              house: accommodations[index],
+                            );
+                          },
+                        ),
+                      //),
+                    );
+                  } else if(snapshot.hasError) {
+                    return const Center(child: Text('Snapshot has errors!'));
+                  }
+
+                  return const Center(child: Text('Error!'));
+                },
+              ),
+            ),
+          ],
         ),
-        bottomNavigationBar: MyBottomNavBar(currentIndex: 0, key: UniqueKey()),
-        // bottomNavigationBar: MyBottomNavBar(key: UniqueKey()),
       ),
     );
   }
