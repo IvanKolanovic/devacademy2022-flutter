@@ -1,8 +1,8 @@
-import 'package:devcademy_flutter/shared/models/reservations.dart';
 import 'package:dio/dio.dart';
 
-import './shared/models/location.dart';
-import './shared/models/accomodation.dart';
+import 'models/location.dart';
+import 'models/accommodation.dart';
+import 'models/reservation.dart';
 
 class HTTPInterceptor extends InterceptorsWrapper {
   @override
@@ -44,30 +44,21 @@ class HTTP {
         .toList();
   }
 
-  Future<List<Accomodation>> getPopularHomes() async {
+  Future<List<Accommodation>> getPopularHomes() async {
     Response response = await client.get(
       'homes',
     );
     return response.data
-        .map<Accomodation>((json) => Accomodation.fromJson(json))
+        .map<Accommodation>((json) => Accommodation.fromJson(json))
         .toList();
   }
 
-  Future<List<Accomodation>> getAllAccomodations() async {
+  Future<List<Accommodation>> getAllHomes() async {
     Response response = await client.get(
       'homes-all',
     );
     return response.data
-        .map<Accomodation>((json) => Accomodation.fromJson(json))
-        .toList();
-  }
-
-  Future<List<Accomodation>> getMyPlaces() async {
-    Response response = await client.get(
-      'myplaces',
-    );
-    return response.data
-        .map<Accomodation>((json) => Accomodation.fromJson(json))
+        .map<Accommodation>((json) => Accommodation.fromJson(json))
         .toList();
   }
 
@@ -80,20 +71,48 @@ class HTTP {
         .toList();
   }
 
-  Future<Accomodation> getAccomodation(String id) async {
+  Future<List<Accommodation>> getMyPlaces() async {
     Response response = await client.get(
-      'homes-all/$id',
-    );
-    return Accomodation.fromJson(response.data);
-  }
-
-  Future<List<Reservation>> getReservation(String id) async {
-    Response response = await client.get(
-      'homes-all/$id/reservation',
+      'myplaces',
     );
     return response.data
-        .map<Reservation>((json) => Reservation.fromJson(json))
+        .map<Accommodation>((json) => Accommodation.fromJson(json))
         .toList();
+  }
+
+  Future<Accommodation> addMyPlace(Accommodation newAccommodation) async {
+    Response response = await client.post(
+      'myplaces',
+      data: newAccommodation,
+    );
+
+    return Accommodation.fromJson(response.data);
+  }
+
+  Future<Accommodation> deleteMyPlace(String id) async {
+    Response response = await client.delete(
+      'myplaces/$id',
+    );
+
+    return Accommodation.fromJson(response.data);
+  }
+
+  Future<Accommodation> editMyPlace(Accommodation accommodation) async {
+    Response response = await client.put(
+      'myplaces/${accommodation.id}',
+      data: accommodation,
+    );
+
+    return Accommodation.fromJson(response.data);
+  }
+
+  Future<Reservation> addMyReservation(Reservation newReservation) async {
+    Response response = await client.post(
+      'homes-all/1/reservation',
+      data: newReservation,
+    );
+
+    return Reservation.fromJson(response.data);
   }
 }
 
